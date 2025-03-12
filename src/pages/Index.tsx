@@ -2,12 +2,19 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+// Add a type declaration for the Office object
+declare global {
+  interface Window {
+    Office?: any;
+  }
+}
+
 const Index = () => {
   const [isSetup, setIsSetup] = useState(false);
   
   useEffect(() => {
     // Check if we're running in an Outlook context
-    if (typeof Office !== 'undefined' && Office.context) {
+    if (typeof window.Office !== 'undefined' && window.Office.context) {
       setIsSetup(true);
     }
   }, []);
