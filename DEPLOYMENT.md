@@ -7,8 +7,8 @@ This document provides step-by-step instructions for deploying the Outlook add-i
 
 1. Go to [GitHub](https://github.com) and sign in to your account
 2. Click the "+" icon in the top-right corner and select "New repository"
-3. Name your repository (e.g., "sourcealta-outlook-addin")
-4. Choose "Public" visibility (required for GitHub Pages)
+3. Name your repository (e.g., "metadata-popup-creator")
+4. Choose "Public" visibility (required for GitHub Pages unless you have a paid GitHub plan)
 5. Click "Create repository"
 
 ## Step 2: Push the Code to GitHub
@@ -31,47 +31,51 @@ This document provides step-by-step instructions for deploying the Outlook add-i
 
 1. Go to your repository on GitHub
 2. Click "Settings" tab
-3. Scroll down to "GitHub Pages" section
+3. Scroll down to "Pages" section
 4. Under "Source", select "main" branch
 5. Click "Save"
-6. GitHub will provide a URL like: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/`
+6. Wait for GitHub Pages to build and deploy your site (this may take a few minutes)
+7. Once deployed, you'll get a URL like: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/`
 
-## Step 4: Update the Manifest File
-
-1. Open `manifest.xml` in your project
-2. Replace all instances of `YOUR-USERNAME` with your actual GitHub username
-3. Replace all instances of `YOUR-REPO-NAME` with your repository name
-4. Commit and push these changes:
-   ```
-   git add manifest.xml
-   git commit -m "Update manifest URLs for GitHub Pages"
-   git push
-   ```
-
-## Step 5: Test the Add-in in Outlook
+## Step 4: Test the Add-in in Outlook
 
 ### For Outlook Web Access (OWA):
 
+#### Method 1: Using Get Add-ins
 1. Go to [Outlook Web Access](https://outlook.office.com)
-2. Click on the gear icon (Settings) in the top-right corner
-3. Click "View all Outlook settings"
-4. Go to "Mail" > "Customize actions"
-5. Under "Add-ins", click "Add from URL"
-6. Enter the URL to your manifest.xml: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/manifest.xml`
-7. Click "Next" and then "Install"
+2. Click "New message" to create a new email
+3. Look for the "..." (More apps) button in the compose toolbar
+4. Click "Get Add-ins"
+5. Click "My add-ins" tab
+6. Scroll to the bottom and click "Add a custom add-in" > "Add from URL"
+7. Enter the URL to your manifest: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/manifest.xml`
+8. Click "Install"
+
+#### Method 2: Using Admin Settings
+1. Go to [Outlook Web Access](https://outlook.office.com)
+2. Click the gear icon (Settings) in the top-right corner
+3. Search for "Add-ins" or look for "View all Outlook settings"
+4. Go to "Mail" > "Add-ins"
+5. Click "Add from URL" or "Custom add-ins"
+6. Enter the URL to your manifest: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/manifest.xml`
+7. Click "Install"
 
 ### For Outlook Desktop:
 
 #### Windows:
-1. Open Outlook
-2. Click "File" > "Manage Add-ins" (this opens OWA in a browser)
-3. Follow the OWA instructions above
+1. Open Outlook desktop app
+2. Click "Home" tab
+3. Click "Get Add-ins" button (usually in the right side of the ribbon)
+4. Click "My add-ins" tab
+5. Scroll to the bottom and click "Add a custom add-in" > "Add from URL"
+6. Enter the URL to your manifest: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/manifest.xml`
+7. Click "Install"
 
 #### Mac:
 1. Open Outlook
 2. Click "Tools" > "Add-ins"
 3. Click the "+" icon and select "Add a custom add-in" > "Add from URL"
-4. Enter the URL to your manifest.xml: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/manifest.xml`
+4. Enter the URL to your manifest: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/manifest.xml`
 5. Click "Install"
 
 ## Testing the Add-in
@@ -84,7 +88,21 @@ This document provides step-by-step instructions for deploying the Outlook add-i
 
 ## Troubleshooting
 
-- If the add-in doesn't appear, try refreshing Outlook
-- Check the browser console for any errors
-- Ensure all URLs in the manifest file are correct and accessible
-- Make sure your GitHub Pages site is properly published
+- If you get "Manifest validation failed" errors:
+  - Make sure your manifest.xml is properly formatted with no syntax errors
+  - Check that all URLs in the manifest point to the correct GitHub Pages URL
+  - Ensure all required files (HTML, JS, icons) are present in your repository
+  - Verify your repository is public (or you have GitHub Pro/Enterprise for private repos)
+  - Wait a few minutes for GitHub Pages to fully deploy your changes
+
+- If the add-in doesn't appear:
+  - Try refreshing Outlook or restarting the application
+  - Check browser console for any errors (F12 in most browsers)
+  - Ensure all URLs in the manifest file are correct and accessible
+  - Make sure your GitHub Pages site is properly published and accessible
+
+- To manually verify your files are published correctly, visit:
+  - Main page: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/`
+  - Manifest: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/manifest.xml`
+  - Function file: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/function-file.html`
+  - Company dialog: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/company-dialog.html`
