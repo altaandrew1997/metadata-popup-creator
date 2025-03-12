@@ -1,0 +1,131 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp
+          xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+          xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+          xsi:type="MailApp">
+
+  <!-- Begin Basic Settings: Add-in metadata, used for all versions of Office unless override provided. -->
+
+  <!-- IMPORTANT! Id must be unique for your add-in, if you reuse this manifest ensure that you change this id to a new GUID. -->
+  <Id>c1947283-af4b-41a4-9cfd-24ce32c1a344</Id>
+
+  <!--Version. Updates from the store only get triggered if there is a version change. -->
+  <Version>1.0.0.0</Version>
+  <ProviderName>Source Alta</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  
+  <!-- The display name of your add-in. Used in the Office UI. -->
+  <DisplayName DefaultValue="Source Alta Metadata Collector" />
+  <Description DefaultValue="Collects company metadata when emails are sent to specific addresses"/>
+  
+  <!-- Icon for your add-in. Used in installation screens and the add-ins dialog. -->
+  <IconUrl DefaultValue="https://1a747671-1dfb-4bd4-b779-ba961a479375.lovableproject.com/assets/icon-64.png" />
+  <HighResolutionIconUrl DefaultValue="https://1a747671-1dfb-4bd4-b779-ba961a479375.lovableproject.com/assets/icon-128.png" />
+
+  <!--If you plan to submit to the Office Store, uncomment the SupportUrl element below-->
+  <SupportUrl DefaultValue="https://sourcealta.com/support" />
+
+  <!-- Domains that will be allowed when navigating. For example, if you use ShowTaskpane and then have an href link, navigation will only be allowed if the domain is in this list. -->
+  <AppDomains>
+    <AppDomain>1a747671-1dfb-4bd4-b779-ba961a479375.lovableproject.com</AppDomain>
+    <AppDomain>sourcealta.com</AppDomain>
+  </AppDomains>
+  
+  <!--End Basic Settings. -->
+
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+  
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1" />
+    </Sets>
+  </Requirements>
+  
+  <FormSettings>
+    <Form xsi:type="ItemEdit">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://1a747671-1dfb-4bd4-b779-ba961a479375.lovableproject.com/" />
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadWriteMailbox</Permissions>
+  
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit" />
+  </Rule>
+  
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets>
+        <bt:Set Name="Mailbox" MinVersion="1.3" />
+      </bt:Sets>
+    </Requirements>
+    
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <!-- Message Compose -->
+          <FunctionFile resid="functionFile" />
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgComposeGroup">
+                <Label resid="groupLabel" />
+                <Control xsi:type="Button" id="msgComposeOpenPaneButton">
+                  <Label resid="paneButtonLabel" />
+                  <Supertip>
+                    <Title resid="paneButtonTitle" />
+                    <Description resid="paneButtonDesc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16" />
+                    <bt:Image size="32" resid="icon32" />
+                    <bt:Image size="80" resid="icon80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="taskPaneUrl" />
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+          
+          <!-- On Send event -->
+          <ExtensionPoint xsi:type="Events">
+            <Event Type="ItemSend" FunctionExecution="synchronous" FunctionName="onItemSend" />
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon16" DefaultValue="https://1a747671-1dfb-4bd4-b779-ba961a479375.lovableproject.com/assets/icon-16.png" />
+        <bt:Image id="icon32" DefaultValue="https://1a747671-1dfb-4bd4-b779-ba961a479375.lovableproject.com/assets/icon-32.png" />
+        <bt:Image id="icon80" DefaultValue="https://1a747671-1dfb-4bd4-b779-ba961a479375.lovableproject.com/assets/icon-80.png" />
+      </bt:Images>
+      
+      <bt:Urls>
+        <bt:Url id="functionFile" DefaultValue="https://1a747671-1dfb-4bd4-b779-ba961a479375.lovableproject.com/function-file.html" />
+        <bt:Url id="taskPaneUrl" DefaultValue="https://1a747671-1dfb-4bd4-b779-ba961a479375.lovableproject.com/" />
+      </bt:Urls>
+      
+      <bt:ShortStrings>
+        <bt:String id="groupLabel" DefaultValue="Source Alta" />
+        <bt:String id="paneButtonLabel" DefaultValue="Add Company ID" />
+        <bt:String id="paneButtonTitle" DefaultValue="Add Company ID" />
+      </bt:ShortStrings>
+      
+      <bt:LongStrings>
+        <bt:String id="paneButtonDesc" DefaultValue="Opens a pane to add Company ID metadata to this email." />
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

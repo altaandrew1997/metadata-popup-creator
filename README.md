@@ -1,69 +1,55 @@
-# Welcome to your Lovable project
 
-## Project info
+# Source Alta Metadata Collector
 
-**URL**: https://lovable.dev/projects/1a747671-1dfb-4bd4-b779-ba961a479375
+This project is an Outlook add-in that collects Company ID metadata when emails are sent with deals@sourcealta.com in BCC. The metadata is stored as a custom property with the email, making it easily accessible for data processing via Python scripts without needing to parse the email body.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- Automatically detects when deals@sourcealta.com is included in BCC
+- Prompts users to enter a Company ID when sending emails
+- Stores the Company ID as a custom property with the email
+- Only requires input on new email threads (not replies)
+- Clean, modern interface inspired by Apple design principles
 
-**Use Lovable**
+## Deploying the Add-in
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1a747671-1dfb-4bd4-b779-ba961a479375) and start prompting.
+To deploy this add-in to Outlook:
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Host this web application on a server (or use a service like GitHub Pages)
+2. Update the URLs in the manifest.xml file to point to your hosted application
+3. Add icon files to the public/assets directory
+4. Sideload the manifest.xml file in Outlook (refer to Microsoft's documentation on sideloading Office Add-ins)
 
-**Use your preferred IDE**
+## Development
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+This project was built with:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- React
+- TypeScript
+- Tailwind CSS
+- Office.js for Outlook integration
+- Framer Motion for animations
 
-Follow these steps:
+## Accessing the Metadata via Python
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+To access the stored Company ID from Python, use Microsoft's Graph API or Exchange Web Services (EWS). Example Python code:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```python
+from exchangelib import Credentials, Account, Configuration, DELEGATE
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Connect to Exchange
+credentials = Credentials(username='your_email@example.com', password='your_password')
+config = Configuration(server='outlook.office365.com', credentials=credentials)
+account = Account(primary_smtp_address='your_email@example.com', config=config, 
+                 access_type=DELEGATE, autodiscover=False)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Get emails and their metadata
+for item in account.inbox.all().order_by('-datetime_received')[:100]:
+    # Access custom properties
+    if hasattr(item, 'company_id'):
+        print(f"Email: {item.subject}, Company ID: {item.company_id}")
 ```
 
-**Edit a file directly in GitHub**
+## License
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/1a747671-1dfb-4bd4-b779-ba961a479375) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+This project is licensed under the MIT License.

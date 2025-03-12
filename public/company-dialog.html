@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company ID</title>
+  <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f7;
+      color: #1d1d1f;
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    h2 {
+      margin-top: 0;
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    
+    p {
+      margin-bottom: 24px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #6e6e73;
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #d2d2d7;
+      background-color: #fff;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    
+    input:focus {
+      border-color: #0071e3;
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+    }
+    
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    #submit-button {
+      background-color: #0071e3;
+      color: white;
+    }
+    
+    #submit-button:hover {
+      background-color: #0077ed;
+    }
+    
+    #cancel-button {
+      background-color: transparent;
+      color: #0071e3;
+    }
+    
+    #cancel-button:hover {
+      background-color: rgba(0, 113, 227, 0.1);
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .error-message {
+      color: #ff3b30;
+      font-size: 12px;
+      margin-top: -16px;
+      margin-bottom: 16px;
+      display: none;
+    }
+  </style>
+  <script type="text/javascript">
+    Office.initialize = function () {
+      document.getElementById('submit-button').onclick = saveCompanyId;
+      document.getElementById('cancel-button').onclick = closeDialog;
+      document.getElementById('company-id').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          saveCompanyId();
+        }
+      });
+    };
+    
+    function saveCompanyId() {
+      const companyId = document.getElementById('company-id').value.trim();
+      if (companyId) {
+        Office.context.ui.messageParent(JSON.stringify({
+          companyId: companyId
+        }));
+      } else {
+        document.getElementById('error-message').style.display = 'block';
+      }
+    }
+    
+    function closeDialog() {
+      Office.context.ui.messageParent(JSON.stringify({
+        companyId: null
+      }));
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>Company ID Required</h2>
+    <p>This email includes deals@sourcealta.com as a recipient. Please provide a Company ID for tracking purposes.</p>
+    <input type="text" id="company-id" placeholder="Enter Company ID" autofocus />
+    <div id="error-message" class="error-message">Please enter a Company ID</div>
+    <div class="button-container">
+      <button id="cancel-button">Cancel</button>
+      <button id="submit-button">Submit</button>
+    </div>
+  </div>
+</body>
+</html>
