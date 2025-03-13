@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,8 +35,8 @@
             
             if (!companyId) {
               // No company ID set, show the taskpane
-              Office.context.ui.displayDialogAsync(
-                'https://altaandrew1997.github.io/metadata-popup-creator/company-dialog.html',
+            Office.context.ui.displayDialogAsync(
+              'https://altaandrew1997.github.io/metadata-popup-creator/public/company-dialog.html',
                 {height: 40, width: 30, displayInIframe: true},
                 function(result) {
                   if (result.status === Office.AsyncResultStatus.Failed) {
