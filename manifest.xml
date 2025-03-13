@@ -45,7 +45,7 @@
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
   </Rule>
   
-  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+ <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
     <Requirements>
@@ -95,10 +95,12 @@
         <bt:Image id="icon80" DefaultValue="https://altaandrew1997.github.io/metadata-popup-creator/assets/80.png"/>
       </bt:Images>
       
-      <bt:Urls>
-        <bt:Url id="functionFile" DefaultValue="https://altaandrew1997.github.io/metadata-popup-creator/public/function-file.html"/>
-        <bt:Url id="taskPaneUrl" DefaultValue="https://altaandrew1997.github.io/metadata-popup-creator/"/>
-      </bt:Urls>
+          <bt:Urls>
+            <bt:Url id="functionFile" DefaultValue="https://altaandrew1997.github.io/metadata-popup-creator/public/function-file.html"/>
+            <bt:Url id="taskPaneUrl" DefaultValue="https://altaandrew1997.github.io/metadata-popup-creator/"/>
+            <bt:Url id="supportUrl" DefaultValue="https://sourcealta.com/support"/>
+          </bt:Urls>
+
       
       <bt:ShortStrings>
         <bt:String id="groupLabel" DefaultValue="Alta"/>
